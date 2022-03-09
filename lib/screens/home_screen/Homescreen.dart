@@ -1,136 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:foodiapp/config/colors.dart';
+import 'package:foodiapp/screens/home_screen/Drawer_side.dart';
+import 'package:foodiapp/screens/home_screen/single_product.dart';
+import 'package:foodiapp/screens/product_overview/Product_overview.dart';
+import 'package:foodiapp/screens/search/search.dart';
 
 class Homescreen extends StatelessWidget {
-  Widget singalProduct() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      height: 230,
-      width: 160,
-      decoration: BoxDecoration(
-        color: Color(0xffd9dad9),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          Expanded(
-              flex: 2, child: Container(child: Image.asset("assets/kk.png"))),
-          Expanded(
-            child: Column(
-              children: [
-                Text(
-                  "Fresh Basil",
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5.0),
-                  child: Text(
-                    "50\$/50 Gram",
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 30,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 4),
-                              child: Expanded(
-                                child: Text(
-                                  "50 gram",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_drop_down,
-                              color: Color(0xffd0b84c),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 30,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.remove,
-                              size: 15,
-                              color: Color(0xffd0b84c),
-                            ),
-                            Text(
-                              '1',
-                              style: TextStyle(
-                                color: Color(0xffd0b84c),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Icon(
-                              Icons.add,
-                              size: 15,
-                              color: Color(0xffd0b84c),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  const Homescreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffcbcbcb),
+      backgroundColor: ScaffoldBackgroundColor,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: textColor),
         actions: [
           CircleAvatar(
             radius: 12,
-            backgroundColor: Color(0xffd4d181),
-            child: Icon(
-              Icons.search,
-              size: 17,
-              color: Colors.black,
-            ),
+            backgroundColor: primaryColor,
+            child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Search(),
+                    ),
+                  );
+                },
+                icon: Icon(
+                  Icons.search,
+                  size: 20,
+                  color: Colors.black,
+                )),
           ),
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(15),
             child: CircleAvatar(
               radius: 12,
-              backgroundColor: Color(0xffd4d181),
+              backgroundColor: primaryColor,
               child: Icon(
                 Icons.shop,
-                size: 17,
+                size: 20,
                 color: Colors.black,
               ),
             ),
@@ -140,9 +47,9 @@ class Homescreen extends StatelessWidget {
           "Home",
           style: TextStyle(color: Colors.black, fontSize: 17),
         ),
-        backgroundColor: Color(0xffd6b738),
+        backgroundColor: Color(0xffd1ad17),
       ),
-      drawer: Drawer(),
+      drawer: DrawerSide(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: ListView(
@@ -150,7 +57,7 @@ class Homescreen extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.amber,
+                color: ScaffoldBackgroundColor,
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: AssetImage("assets/home.jpg"),
@@ -170,7 +77,7 @@ class Homescreen extends StatelessWidget {
                             ),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Color(0xffd1ad17),
+                                color: primaryColor,
                                 borderRadius: BorderRadius.only(
                                   bottomRight: Radius.circular(50),
                                   bottomLeft: Radius.circular(50),
@@ -222,7 +129,7 @@ class Homescreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Herbs Seasonings",
+                    "Burgers",
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
@@ -236,11 +143,31 @@ class Homescreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
+                  SingleProduct(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => Product_Overview(
+                              productName: "Ham Burger",
+                              productImage: "assets/1.png",
+                            ),
+                          ),
+                        );
+                      },
+                      productImage: "assets/1.png",
+                      productName: "Ham Burger"),
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/2.png",
+                      productName: "Patti Burger"),
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/3.png",
+                      productName: "Double Cheese Burger"),
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/4.png",
+                      productName: "Chicken Burger"),
                 ],
               ),
             ),
@@ -250,7 +177,7 @@ class Homescreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Fresh Fruits ",
+                    "Pizza's",
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
@@ -264,11 +191,61 @@ class Homescreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/lasania.png",
+                      productName: "Lasania"),
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/Pepperoni.png",
+                      productName: "Pepperoni"),
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/Slice.png",
+                      productName: "Chicken Tikka"),
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/Cheese.png",
+                      productName: "Cheese"),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Krispy Chicken",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  Text(
+                    "view more",
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
+              ),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/drum.png",
+                      productName: "Chicken Drumstick"),
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/nuggets.png",
+                      productName: "Chicken Nuggets"),
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/wings.png",
+                      productName: "Chicken Wings"),
+                  SingleProduct(
+                      onTap: () {},
+                      productImage: "assets/krispy.png",
+                      productName: "Krispy Chicken"),
                 ],
               ),
             ),
